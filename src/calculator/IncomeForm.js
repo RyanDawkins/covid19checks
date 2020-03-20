@@ -38,7 +38,7 @@ class IncomeForm extends React.Component {
                 <form>
                     <fieldset>
                         <label htmlFor="income">Income</label><br />
-                        <input id="income" type="number" value={this.state.income} onChange={this.handleIncomeChange} placeholder="Income" step="1" />
+                        <input id="income" type="number" value={this.state.income} onChange={this.handleIncomeChange} placeholder="Income"/>
                     </fieldset>
                     <fieldset>
                         <label htmlFor="maritalStatus">Married?</label><br />

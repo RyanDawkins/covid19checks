@@ -2,14 +2,14 @@ const SINGLE = {
     baseAmount: 1200,
     maxIncomeForFullPayout: 75000,
     minIncomeForPayout: 2500,
-    minimumPayout: 1200
+    minimumPayout: 600
 }
 
 const MARRIED = {
     baseAmount: 2400,
     maxIncomeForFullPayout: 150000,
     minIncomeForPayout: 2500,
-    minimumPayout: 600
+    minimumPayout: 1200
 }
 
 const DEDUCTION_PER_INCREMENT = 5
@@ -31,6 +31,10 @@ export default class CoronaCheck {
      */
     calculatePayout() {
         const maritalValues = this._getMaritalValues()
+        if (this.getIncome() <= maritalValues.minIncomeForPayout) {
+            return maritalValues.minimumPayout
+        }
+
         const payout = maritalValues.baseAmount - this._getDeductionOffset(maritalValues.maxIncomeForFullPayout)
         return payout < 0 ? 0 : payout
     }
