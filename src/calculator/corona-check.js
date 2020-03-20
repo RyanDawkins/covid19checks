@@ -31,7 +31,8 @@ export default class CoronaCheck {
      */
     calculatePayout() {
         const maritalValues = this._getMaritalValues()
-        return maritalValues.baseAmount - this._getDeductionOffset(maritalValues.maxIncomeForFullPayout)
+        const payout = maritalValues.baseAmount - this._getDeductionOffset(maritalValues.maxIncomeForFullPayout)
+        return payout < 0 ? 0 : payout
     }
 
     _getMaritalValues() {

@@ -17,9 +17,14 @@ describe('CoronaCheck', function () {
             expect(check.calculatePayout()).toBe(1200)
         })
 
-        it('should deduct when married has above the max income', function() {
+        it('should deduct when single has above the max income', function() {
             const check = new CoronaCheck(75200, SINGLE)
             expect(check.calculatePayout()).toBe(1190)
+        })
+
+        it('should have no payout when single and way above max income', function () {
+            const check = new CoronaCheck(999999, SINGLE)
+            expect(check.calculatePayout()).toBe(0)
         })
 
         it('should have base when married has below the max income', function () {
@@ -35,6 +40,11 @@ describe('CoronaCheck', function () {
         it('should deduct when married has above the max income', function() {
             const check = new CoronaCheck(150200, MARRIED)
             expect(check.calculatePayout()).toBe(2390)
+        })
+
+        it('should have no payout when married and way above max income', function () {
+            const check = new CoronaCheck(999999, MARRIED)
+            expect(check.calculatePayout()).toBe(0)
         })
 
         it('should not mutate when changing marital status', function () {
