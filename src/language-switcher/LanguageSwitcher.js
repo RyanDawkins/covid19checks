@@ -23,7 +23,7 @@ class LanguageSwitcher extends React.Component {
         const { t } = this.props
         return (
             <div className="container-fluid">
-                <p><button onClick={this.handleSwitch}>{ t('languageMessage') }</button></p>
+                <button type="button" className="btn btn-primary" onClick={this.handleSwitch}>{ t('languageMessage') }</button>
             </div>
         )
     }
