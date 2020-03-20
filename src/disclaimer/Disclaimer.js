@@ -1,8 +1,10 @@
 import React from 'react'
+import { withTranslation, Trans } from 'react-i18next'
 import './Disclaimer.css'
 
-export default class Disclaimer extends React.Component {
+class Disclaimer extends React.Component {
     render() {
+        const { t } = this.props
         return (
             <div className="alert alert-warning">
                 <p>
@@ -11,9 +13,13 @@ export default class Disclaimer extends React.Component {
                         <path d="M7.002 11a1 1 0 112 0 1 1 0 01-2 0zM7.1 4.995a.905.905 0 111.8 0l-.35 3.507a.552.552 0 01-1.1 0L7.1 4.995z"/>
                     </svg>
 
-                    This calculation does no guarantee a payout. This is exclusively a projection based on the <a target="_blank" rel="noopener noreferrer" href="https://www.npr.org/2020/03/19/818253789/congress-awaits-gop-relief-plan-as-first-lawmakers-test-positive-for-coronavirus">NPR article of the bill propsed on 3/19/2020.</a>
+                    <Trans i18nKey="disclaimer">
+                        This calculation does no guarantee a payout. This is exclusively a projection based on the <a target="_blank" rel="noopener noreferrer" href="https://www.npr.org/2020/03/19/818253789/congress-awaits-gop-relief-plan-as-first-lawmakers-test-positive-for-coronavirus">NPR article of the bill propsed on 3/19/2020.</a>
+                    </Trans>
                 </p>
             </div>
         )
     }
 }
+
+export default withTranslation()(Disclaimer)

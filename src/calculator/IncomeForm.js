@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import { withTranslation } from 'react-i18next'
 
 import './IncomeForm.css';
 import CoronaCheck from './corona-check';
@@ -33,31 +34,32 @@ class IncomeForm extends React.Component {
     }
 
     render() {
+        const { t } = this.props
         return (
             <div className="IncomeForm">
                 <form>
                     <fieldset>
-                        <label htmlFor="income">Income</label><br />
-                        <input id="income" type="number" value={this.state.income} onChange={this.handleIncomeChange} placeholder="Income"/>
+                        <label htmlFor="income">{t('income')}</label><br />
+                        <input id="income" type="number" value={this.state.income} onChange={this.handleIncomeChange} placeholder={t('income')}/>
                     </fieldset>
                     <fieldset>
-                        <label htmlFor="maritalStatus">Married?</label><br />
+                        <label htmlFor="maritalStatus">{t('maritalStatus')}</label><br />
                         <input id="maritalStatus" type="radio" 
                             value={true}
                             checked={this.state.isMarried}
                             onChange={this.handleMaritalStatusChange} />
-                        Yes
+                        {t('yes')}
                         <input id="maritalStatus" type="radio" 
                             value={false}
                             checked={!this.state.isMarried}
                             onChange={this.handleMaritalStatusChange} />
-                        No
+                        {t('no')}
                     </fieldset>
                 </form>
-                <p>Projected payout: ${this.state.payout}</p>
+                <p>{t('expectedPayout')}: ${this.state.payout}</p>
             </div>
           );
     }
 }
 
-export default IncomeForm;
+export default withTranslation()(IncomeForm);
