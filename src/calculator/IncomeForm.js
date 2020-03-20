@@ -7,18 +7,25 @@ import CoronaCheck from './corona-check';
 class IncomeForm extends React.Component {
     constructor(props) {
         super(props)
-        this.check = new CoronaCheck(0, false)
-        this.state = { income: undefined, isMarried: this.check.isMarried(), payout: this.check.calculatePayout() }
+        this.check = new CoronaCheck(0, false, 0)
+        this.state = { 
+            income: 0, 
+            isMarried: this.check.isMarried(),
+            numberOfChildren: 0, 
+            payout: this.check.calculatePayout()
+        }
 
         this.handleMaritalStatusChange = this.handleMaritalStatusChange.bind(this)
         this.handleIncomeChange = this.handleIncomeChange.bind(this)
+        this.handleNumberOfChildrenChange = this.handleNumberOfChildrenChange.bind(this)
     }
 
     handleIncomeChange(event) {
-        this.check = this.check.changeIncome(event.target.value)
+        const income = Number(event.target.value)
+        this.check = this.check.changeIncome(income)
         this.setState({
             ...this.state,
-            income:event.target.value,
+            income: event.target.value,
             payout: this.check.calculatePayout()
         })
     }
@@ -33,6 +40,16 @@ class IncomeForm extends React.Component {
         })
     }
 
+    handleNumberOfChildrenChange(event) {
+        const numberOfChildren = Number(event.target.value)
+        this.check = this.check.changeNumberOfChildren(numberOfChildren)
+        this.setState({
+            ...this.state,
+            numberOfChildren: event.target.value,
+            payout: this.check.calculatePayout()
+        })
+    }
+
     render() {
         const { t } = this.props
         return (
@@ -40,7 +57,10 @@ class IncomeForm extends React.Component {
                 <form>
                     <fieldset>
                         <label htmlFor="income">{t('income')}</label><br />
-                        <input id="income" type="number" value={this.state.income} onChange={this.handleIncomeChange} placeholder={t('income')}/>
+                        <input id="income" type="number"
+                            value={this.state.income}
+                            onChange={this.handleIncomeChange}
+                            placeholder={t('income')}/>
                     </fieldset>
                     <fieldset>
                         <label htmlFor="maritalStatus">{t('maritalStatus')}</label><br />
@@ -54,6 +74,13 @@ class IncomeForm extends React.Component {
                             checked={!this.state.isMarried}
                             onChange={this.handleMaritalStatusChange} />
                         {t('no')}
+                    </fieldset>
+                    <fieldset>
+                        <label htmlFor="numberOfChildren">{t('howManyChildren')}</label><br />
+                        <input id="numberOfChildren" type="number" 
+                            value={this.state.numberOfChildren} 
+                            onChange={this.handleNumberOfChildrenChange} 
+                            placeholder={t('numberOfChildren')} />
                     </fieldset>
                 </form>
                 <p>{t('expectedPayout')}: ${this.state.payout}</p>

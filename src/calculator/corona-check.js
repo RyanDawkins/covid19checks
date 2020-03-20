@@ -14,38 +14,50 @@ const MARRIED = {
 
 const DEDUCTION_PER_INCREMENT = 5
 const INCREMENT = 100
+const PAYOUT_PER_CHILD = 500
 
 export default class CoronaCheck {
 
     /**
      * @param {number} income 
-     * @param {boolean} isMarried 
+     * @param {boolean} isMarried
+     * @param {numberOfChildren} numberOfChildren
      */
-    constructor(income, isMarried) {
+    constructor(income, isMarried, numberOfChildren) {
         this._income = income
         this._isMarried = isMarried
+        this._numberOfChildren = numberOfChildren
     }
 
     /**
      * @returns {number} payout based on income and marital status
      */
     calculatePayout() {
+        return this._getIncomeBasedPayout() + this._calculateChildrenPayout()
+    }
+
+    _getIncomeBasedPayout() {
         const maritalValues = this._getMaritalValues()
-        if (this.getIncome() <= maritalValues.minIncomeForPayout) {
-            return maritalValues.minimumPayout
+
+        let payout = maritalValues.minimumPayout
+        if (this._income > maritalValues.minIncomeForPayout) {
+            payout = maritalValues.baseAmount - this._getDeductionOffset(maritalValues.maxIncomeForFullPayout)
         }
 
-        const payout = maritalValues.baseAmount - this._getDeductionOffset(maritalValues.maxIncomeForFullPayout)
         return payout < 0 ? 0 : payout
     }
 
     _getMaritalValues() {
-        return this.isMarried() ? MARRIED : SINGLE
+        return this._isMarried ? MARRIED : SINGLE
+    }
+
+    _calculateChildrenPayout() {
+        return PAYOUT_PER_CHILD * this.getNumberOfChildren()
     }
 
     _getDeductionOffset(maxIncomeForFullPayout) {
-        if (this.getIncome() <= maxIncomeForFullPayout) return 0
-        return Math.round(((this.getIncome() - maxIncomeForFullPayout) / INCREMENT) * DEDUCTION_PER_INCREMENT)
+        if (this._income <= maxIncomeForFullPayout) return 0
+        return Math.round(((this._income - maxIncomeForFullPayout) / INCREMENT) * DEDUCTION_PER_INCREMENT)
     }
 
     /**
@@ -53,7 +65,7 @@ export default class CoronaCheck {
      * @returns {CoronaCheck} new instance with a different income
      */
     changeIncome(income) {
-        return new CoronaCheck(income, this.isMarried())
+        return new CoronaCheck(income, this._isMarried, this._numberOfChildren)
     }
 
     /**
@@ -61,7 +73,11 @@ export default class CoronaCheck {
      * @returns {CoronaCheck} new instance with a different marital status
      */
     changeMaritalStatus(isMarried) {
-        return new CoronaCheck(this.getIncome(), isMarried)
+        return new CoronaCheck(this._income, isMarried, this._numberOfChildren)
+    }
+
+    changeNumberOfChildren(numberOfChildren) {
+        return new CoronaCheck(this._income, this._isMarried, numberOfChildren)
     }
 
     /**
@@ -76,6 +92,13 @@ export default class CoronaCheck {
      */
     getIncome() {
         return this._income
+    }
+
+    /**
+     * @returns {number} number of children
+     */
+    getNumberOfChildren() {
+        return this._numberOfChildren || 0
     }
 
 }

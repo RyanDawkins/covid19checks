@@ -18,7 +18,9 @@ i18n
             'no': 'No',
             'expectedPayout': 'Expected payout',
             'languageMessage': '¿hable español?',
-            'disclaimer': 'This calculation does no guarantee a payout. This is exclusively a projection based on the <1>NPR article of the bill propsed on 3/19/2020.</1>'
+            'disclaimer': 'This calculation does no guarantee a payout. This is exclusively a projection based on the <1>NPR article of the bill propsed on 3/19/2020.</1>',
+            'howManyChildren': 'How many children do you have?',
+            'numberOfChildren': 'Number of children'
           }
         },
         es: {
@@ -30,6 +32,8 @@ i18n
               'expectedPayout': 'Pago esperado',
               'languageMessage': 'Speak English?',
               'disclaimer': 'Este cálculo no garantiza un pago. Esta es exclusivamente una proyección basada en <1>el artículo de NPR del proyecto de ley aprobado el 19/03/2020</1>',
+              'howManyChildren': '¿Cuántos hijos tiene?',
+              'numberOfChildren': 'Numero de niños'
           }
         }
       },
